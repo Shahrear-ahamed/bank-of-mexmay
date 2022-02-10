@@ -15,5 +15,3 @@ document.getElementById("login_btn").addEventListener("click", function(){
     }
 })
 
-
-// home page are here 
