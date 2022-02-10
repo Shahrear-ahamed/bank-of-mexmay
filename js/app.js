@@ -14,4 +14,3 @@ document.getElementById("login_btn").addEventListener("click", function(){
         alert("your password is wrong")
     }
 })
-

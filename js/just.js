@@ -1,60 +1,29 @@
+document.getElementById("deposit_btn").addEventListener("click", function(){
+    const inputDepositText = document.getElementById("deposit_amount");
+    const inputDeposit = parseFloat(inputDepositText.value);
 
-// user home page are here 
+    const depositText = document.getElementById("total_deposit");
+    const depositAmount = parseFloat(depositText.innerText);
+    depositText.innerText = depositAmount + inputDeposit;
+    inputDepositText.value = "";
 
-// user total amount are here
-const totalDeposit = document.getElementById("total_deposit");
-const totalWithdrow = document.getElementById("total_withdrow");
-const totalBalance = document.getElementById("total_balance");
-
-// money deposit and withdrow 
-const depositBtn = document.getElementById("deposit_btn");
-const deposit = document.getElementById("deposit_amount");
-const withdrowBtn = document.getElementById("withdrow_btn");
-const withdrow = document.getElementById("withdrow_amount");
-
-depositBtn.addEventListener("click", function(){
-    const depositAmounts = parseFloat(deposit.value);
-    const previousDeposit = parseFloat(totalDeposit.innerText);
-    const totalBalanceNumber = parseFloat(totalBalance.innerText);
-
-    const lastAmountDeposit = previousDeposit + depositAmounts;
-
-    // add total balance 
-    const finalBalance = depositAmounts + totalBalanceNumber;
-    
-    totalDeposit.innerText = lastAmountDeposit;
-    deposit.value = "";
-
-    totalBalance.innerText = finalBalance;
+    const totalDepositText = document.getElementById("total_balance");
+    const totalDeposit = parseFloat(totalDepositText.innerText);
+    totalDepositText.innerText = totalDeposit + inputDeposit;
 })
 
-// withdrow section functior
-withdrowBtn.addEventListener("click", function(){
-    const withdrowAmounts = parseFloat(withdrow.value);
-    const previousWithdrow = parseFloat(totalWithdrow.innerText);
-    const totalBalanceNumber = parseFloat(totalBalance.innerText);
+document.getElementById("withdrow_btn").addEventListener("click", function(){
+    const inputWithdrowText = document.getElementById("withdrow_amount");
+    const inputWithdrow = parseFloat(inputWithdrowText.value);
 
-    const lastAmountWithdrow = withdrowAmounts + previousWithdrow;
+    const withdrowText = document.getElementById("total_withdrow");
+    const withdrow = parseFloat(withdrowText.innerText);
 
-    //total cost taka in total balance
-    const totalLastbalance = totalBalanceNumber - withdrowAmounts;
+    withdrowText.innerText = withdrow + inputWithdrow;
+    inputWithdrowText.value = "";
 
-    totalWithdrow.innerText = lastAmountWithdrow;
-    withdrow.value = "";
+    const totalWithdrowText = document.getElementById("total_balance");
+    const totalWithdrow = parseFloat(totalWithdrowText.innerText);
 
-    totalBalance.innerText = totalLastbalance;
+    totalWithdrowText.innerText = totalWithdrow - inputWithdrow;
 })
-
-
-// error handeling 
-// if(typeof depositAmounts == "string"){
-//     alert("Please Input number only");
-//     return
-// }
-// if( depositAmounts < 0){
-//     alert("Money can not deposit negetive number");
-//     return
-// }else if( depositAmounts == 0){
-//     alert("You can not deposit 0 ");
-//     return
-// }
