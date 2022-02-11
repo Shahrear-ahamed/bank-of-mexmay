@@ -1,33 +1,39 @@
 function inputAmount(inputId){
     const inputDepositText = document.getElementById(inputId);
     const inputDeposit = parseFloat(inputDepositText.value);
-
     inputDepositText.value = "";
     return inputDeposit;
 }
 
-function balanceAmount(balanceAmount, depositBalance){
+function updateBalance(balanceAmount, depositBalance){
     const depositText = document.getElementById(balanceAmount);
     const depositAmount = parseFloat(depositText.innerText);
     depositText.innerText = depositAmount + depositBalance;
 }
 
-document.getElementById("deposit_btn").addEventListener("click", function(){
-    const inputDeposit = inputAmount("deposit_amount");
-    balanceAmount("total_deposit", inputDeposit);
-
+function updateTotalBalance(inputTextField, isAdd){
     const totalDepositText = document.getElementById("total_balance");
     const totalDeposit = parseFloat(totalDepositText.innerText);
+    if(isAdd == true){
+        totalDepositText.innerText = totalDeposit + inputTextField;
+    }else{
+        totalDepositText.innerText = totalDeposit - inputTextField;
+    }
+}
 
-    totalDepositText.innerText = totalDeposit + inputDeposit;
+//main button function are here
+document.getElementById("deposit_btn").addEventListener("click", function(){
+    const inputDeposit = inputAmount("deposit_amount");
+    if(inputDeposit > 0){
+    updateBalance("total_deposit", inputDeposit);
+    updateTotalBalance(inputDeposit, true);
+    }
 })
 
 document.getElementById("withdrow_btn").addEventListener("click", function(){
     const inputWithdrow = inputAmount("withdrow_amount");
-    balanceAmount("total_withdrow", inputWithdrow);
-
-    const totalWithdrowText = document.getElementById("total_balance");
-    const totalWithdrow = parseFloat(totalWithdrowText.innerText);
-
-    totalWithdrowText.innerText = totalWithdrow - inputWithdrow;
+    if(inputWithdrow > 0){
+    updateBalance("total_withdrow", inputWithdrow);
+    updateTotalBalance(inputWithdrow, false);
+    }
 })
