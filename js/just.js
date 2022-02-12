@@ -1,39 +1,47 @@
-function inputAmount(inputId){
-    const inputDepositText = document.getElementById(inputId);
-    const inputDeposit = parseFloat(inputDepositText.value);
-    inputDepositText.value = "";
-    return inputDeposit;
+function inputValue(inputValue) {
+    const inputText = document.getElementById(inputValue);
+    const inputAmount = parseFloat(inputText.value);
+    inputText.value = "";
+    return inputAmount;
 }
-
-function updateBalance(balanceAmount, depositBalance){
-    const depositText = document.getElementById(balanceAmount);
-    const depositAmount = parseFloat(depositText.innerText);
-    depositText.innerText = depositAmount + depositBalance;
+function changeMoney(subAmount, previousMoney) {
+    const moneyText = document.getElementById(subAmount);
+    const moneyAmount = parseFloat(moneyText.innerText);
+    moneyText.innerText = moneyAmount + previousMoney;
+    return moneyText;
 }
-
-function updateTotalBalance(inputTextField, isAdd){
-    const totalDepositText = document.getElementById("total_balance");
-    const totalDeposit = parseFloat(totalDepositText.innerText);
-    if(isAdd == true){
-        totalDepositText.innerText = totalDeposit + inputTextField;
-    }else{
-        totalDepositText.innerText = totalDeposit - inputTextField;
+function finalBalance() {
+    const totalBalanceText = document.getElementById("total_balance");
+    const balanceCheck = parseFloat(totalBalanceText.innerText);
+    return balanceCheck;
+}
+function changeTotalBalance(totalBalance, inputAmount, isAdd) {
+    const totalBalanceText = document.getElementById(totalBalance);
+    const totalBalanceAmount = finalBalance();
+    if (isAdd == true) {
+        totalBalanceText.innerText = totalBalanceAmount + inputAmount;
+        return totalBalanceText;
+    } else {
+        totalBalanceText.innerText = totalBalanceAmount - inputAmount;
+        return totalBalanceText;
     }
 }
-
-//main button function are here
-document.getElementById("deposit_btn").addEventListener("click", function(){
-    const inputDeposit = inputAmount("deposit_amount");
-    if(inputDeposit > 0){
-    updateBalance("total_deposit", inputDeposit);
-    updateTotalBalance(inputDeposit, true);
+document.getElementById("deposit_btn").addEventListener("click", function () {
+    const depositInput = inputValue("deposit_amount");
+    if (depositInput > 0) {
+        changeMoney("total_deposit", depositInput);
+        changeTotalBalance("total_balance", depositInput, true);
+    } else {
+        return alert("input positive number only")
     }
-})
-
-document.getElementById("withdrow_btn").addEventListener("click", function(){
-    const inputWithdrow = inputAmount("withdrow_amount");
-    if(inputWithdrow > 0){
-    updateBalance("total_withdrow", inputWithdrow);
-    updateTotalBalance(inputWithdrow, false);
+});
+document.getElementById("withdrow_btn").addEventListener("click", function () {
+    const withdrowInput = inputValue("withdrow_amount");
+    const currentBalance = finalBalance();
+    if (withdrowInput > 0 && currentBalance > withdrowInput) {
+        changeMoney("total_withdrow", withdrowInput);
+        changeTotalBalance("total_balance", withdrowInput, false);
+    } if (currentBalance < withdrowInput) {
+        return alert("you can not withdraw money how much you have")
     }
-})
+});
